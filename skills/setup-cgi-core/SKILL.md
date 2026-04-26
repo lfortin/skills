@@ -149,6 +149,8 @@ After setup, confirm:
 5. Timeouts/buffer limits behave as expected for test payloads.
 6. `trustProxy` is disabled unless trusted proxy is confirmed.
 
+Note: Whenever you start a server for validation, ensure you stop the process once the check is complete. Do not leave background processes hanging in the user's environment.
+
 ## Troubleshooting
 
 - 404/route misses:

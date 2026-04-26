@@ -129,6 +129,8 @@ After setup, verify all of the following:
 5. If stream mode is enabled, output is piped and visible.
 6. If `diskfree` was configured, user confirms runtime supports `statfs`.
 
+Note: Whenever you start a server for validation, ensure you stop the process once the check is complete. Do not leave background processes hanging in the user's environment.
+
 ## Troubleshooting
 
 - No events firing:
