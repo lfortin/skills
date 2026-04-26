@@ -1,6 +1,6 @@
 ---
 name: setup-cgi-core
-description: Install and configure the Node.js `cgi-core` package to host CGI scripts via CLI, native HTTP server, or Express-style middleware, including interpreter mappings, buffer/timeouts, status pages, env injection, and proxy-safe `trustProxy` usage. Use this skill whenever users need to run legacy CGI scripts (Perl, Python, Bash, Node, etc.) in a modern Node setup, replace Apache for lightweight CGI hosting, or wire `/cgi-bin` routing in local/dev environments.
+description: Install and configure the Node.js `cgi-core` package to host CGI scripts via CLI or middleware for HTTP server, including interpreter mappings, buffer/timeouts, status pages, env injection, and proxy-safe `trustProxy` usage. Use this skill whenever users need to run legacy CGI scripts (Perl, Python, Bash, Node, etc.) in a modern Node setup, replace Apache for lightweight CGI hosting, or wire `/cgi-bin` routing in local/dev environments.
 metadata:
   author: lfortin
   version: "1.0"
