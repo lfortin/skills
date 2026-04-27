@@ -1,9 +1,10 @@
 ---
 name: setup-os-monitor
 description: Install and configure the Node.js `os-monitor` package, including legacy-version fallback, threshold tuning, event handlers, stream mode, and validation. Use this skill whenever the user asks to set up OS/system monitoring in Node.js, wire alerts for memory/load/disk/uptime, or integrate `os-monitor` into an app, even if they do not explicitly mention the package name.
+license: MIT
 metadata:
   author: lfortin
-  version: "1.0"
+  version: "1.1.0"
   updated: 2026-04-25
   category: Monitoring
   tags: [monitor, monitoring, os, system, loadavg, freemem, memory, uptime, disk, df, diskfree]
