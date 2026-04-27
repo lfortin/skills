@@ -5,7 +5,7 @@ license: MIT
 metadata:
   author: lfortin
   version: "1.1.0"
-  updated: 2026-04-25
+  updated: 2026-04-27
   category: Web Server / CGI
   tags: [cgi, cgi-bin, cgi-server, http, http-server, middleware, rfc3875]
 ---

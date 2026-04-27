@@ -5,7 +5,7 @@ license: MIT
 metadata:
   author: lfortin
   version: "1.1.0"
-  updated: 2026-04-25
+  updated: 2026-04-27
   category: Monitoring
   tags: [monitor, monitoring, os, system, loadavg, freemem, memory, uptime, disk, df, diskfree]
 ---
