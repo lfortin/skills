@@ -4,7 +4,7 @@ description: Install and configure the Node.js `os-monitor` package, including l
 license: MIT
 metadata:
   author: lfortin
-  version: "1.1.0"
+  version: "1.2.0"
   updated: 2026-04-27
   category: Monitoring
   tags: [monitor, monitoring, os, system, loadavg, freemem, memory, uptime, disk, df, diskfree]
@@ -44,9 +44,9 @@ If the user does not provide preferences, choose sensible defaults and call them
 Use this decision tree:
 
 - If Node.js is `>= 18.15.x`, install:
-  - `npm install os-monitor`
+  - `npm install os-monitor --ignore-scripts`
 - If Node.js is `< 18.15.x` or explicitly very old, install:
-  - `npm install os-monitor@legacy`
+  - `npm install os-monitor@legacy --ignore-scripts`
 
 When in doubt, ask the user to confirm target Node version before proceeding.
 

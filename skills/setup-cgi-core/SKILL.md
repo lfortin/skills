@@ -4,7 +4,7 @@ description: Install and configure the Node.js `cgi-core` package to host CGI sc
 license: MIT
 metadata:
   author: lfortin
-  version: "1.1.0"
+  version: "1.2.0"
   updated: 2026-04-27
   category: Web Server / CGI
   tags: [cgi, cgi-bin, cgi-server, http, http-server, middleware, rfc3875]
@@ -44,7 +44,7 @@ If details are missing, choose practical defaults and call them out.
 Use:
 
 ```bash
-npm install cgi-core
+npm install cgi-core --ignore-scripts
 ```
 
 For quick local bootstrapping:
