@@ -4,7 +4,7 @@ description: Use this skill when the user asks to design, simulate, or document 
 license: MIT
 metadata:
   author: lfortin
-  version: "1.1.0"
+  version: "1.2.0"
   updated: 2026-05-03
   category: Worldbuilding
   tags: [astronomy, physics, scifi, simulation, worldbuilding, procedural-generation]
@@ -76,8 +76,12 @@ Use this template for each major body:
 - **Mass:** [Value in Earth masses or kg]
 - **Semi-Major Axis:** [X] AU
 - **Orbital Period:** [X] Earth Years
+- **Orbital Speed (average):** [X] km/s
 - **Eccentricity (e):** [X.XXX]
 - **Tidal Status:** (Locked / Resonant / Asynchronous)
+- **Rotation Period:** [X] Hours or Days
+- **Axial Tilt:** [X] Degrees
+- **Surface Gravity:** [X] g
 - **Atmospheric Profile:** [Pressure in bars] / [Chemical composition]
 - **Geological Activity:** (Tectonic / Cryovolcanic / Inert)
 - **Chemical Composition:** (for example, heavy metals, liquid hydrocarbons, rare isotopes)
