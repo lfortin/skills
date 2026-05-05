@@ -5,7 +5,7 @@ license: MIT
 metadata:
   author: lfortin
   version: "1.2.0"
-  updated: 2026-05-03
+  updated: 2026-05-04
   category: Worldbuilding
   tags: [astronomy, physics, scifi, simulation, worldbuilding, procedural-generation]
 ---
