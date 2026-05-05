@@ -4,8 +4,8 @@ description: Use this skill when the user asks to design, simulate, or document 
 license: MIT
 metadata:
   author: lfortin
-  version: "1.3.0"
-  updated: 2026-05-04
+  version: "1.4.0"
+  updated: 2026-05-05
   category: Worldbuilding
   tags: [astronomy, physics, scifi, simulation, worldbuilding, procedural-generation]
 ---
@@ -74,6 +74,7 @@ Use this template for each major body:
 ### [Object Name]
 - **Classification:** (Terrestrial / Metallic / Gas Giant / Ice Giant / Singularity)
 - **Mass:** [Value in Earth masses or kg]
+- **Diameter (average):** [X] m or km
 - **Semi-Major Axis:** [X] AU
 - **Orbital Period:** [X] Earth Years
 - **Orbital Speed (average):** [X] km/s
