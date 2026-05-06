@@ -4,8 +4,8 @@ description: Use this skill when the user asks to design, simulate, or document 
 license: MIT
 metadata:
   author: lfortin
-  version: "1.4.0"
-  updated: 2026-05-05
+  version: "1.5.0"
+  updated: 2026-05-06
   category: Worldbuilding
   tags: [astronomy, physics, scifi, simulation, worldbuilding, procedural-generation]
 ---
@@ -55,7 +55,7 @@ Model the system as heat flow from source to sink.
 Tie composition to formation zone and migration history.
 
 - **Inner refractory zone:** iron, nickel, silicates, dense rocky bodies.
-- **Outer volatile zone:** ices and gas-rich compositions (`H2O`, `CO2`, `N2`, `CH4`).
+- **Outer volatile zone:** ices and gas-rich compositions (`H2O`, `CO2`, `H2`, `He`, `N2`, `CH4`, `NH3`, `H2S`, `PH3`, ...).
 - Include accretion dynamics: massive shepherd bodies can clear disk gaps and create ring/belt structure.
 
 ## 5) Triple Observational Standard
