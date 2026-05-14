@@ -4,10 +4,10 @@ description: Use this skill when the user asks to design, simulate, or document 
 license: MIT
 metadata:
   author: lfortin
-  version: "1.5.0"
-  updated: 2026-05-06
+  version: "1.5.1"
+  updated: 2026-05-14
   category: Worldbuilding
-  tags: [astronomy, physics, scifi, simulation, worldbuilding, procedural-generation]
+  tags: [astronomy, astrophysics, physics, orbital-mechanics, scifi, hard-sci-fi, simulation, worldbuilding, procedural-generation]
 ---
 
 # Create Stellar System
