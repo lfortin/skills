@@ -4,7 +4,7 @@ description: Install and configure the Node.js `cgi-core` package to host CGI sc
 license: MIT
 metadata:
   author: lfortin
-  version: "1.2.0"
+  version: "1.3.0"
   updated: 2026-04-27
   category: Web Server / CGI
   tags: [cgi, cgi-bin, cgi-server, http, http-server, middleware, rfc3875]
@@ -13,6 +13,9 @@ metadata:
 # Setup cgi-core
 
 Use this skill to safely and quickly set up [`cgi-core`](https://www.npmjs.com/package/cgi-core) for CGI script hosting.
+
+## Reference Materials
+- **Authoritative Docs:** Read the local `./README.md` file in this skill's folder for an exhaustive schema of configuration keys.
 
 ## Workflow
 
