@@ -4,8 +4,8 @@ description: Install and configure the Node.js `os-monitor` package, including l
 license: MIT
 metadata:
   author: lfortin
-  version: "1.2.0"
-  updated: 2026-04-27
+  version: "1.3.0"
+  updated: 2026-06-15
   category: Monitoring
   tags: [monitor, monitoring, os, system, loadavg, freemem, memory, uptime, disk, df, diskfree]
 ---
@@ -13,6 +13,9 @@ metadata:
 # Setup os-monitor
 
 Use this skill to reliably install and configure [`os-monitor`](https://www.npmjs.com/package/os-monitor) in a Node.js project.
+
+## Reference Materials
+- **Authoritative Docs:** Read the local `./README.md` file in this skill's folder for full event object structures, precise threshold configurations and built-in helper functions like `monitor.minutes()` or `monitor.blocks()`.
 
 ## What to do
 
