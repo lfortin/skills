@@ -4,7 +4,7 @@ description: Install and configure the Node.js `cgi-core` package to host CGI sc
 license: MIT
 metadata:
   author: lfortin
-  version: "1.3.2"
+  version: "1.4.0"
   updated: 2026-08-16
   category: Web Server / CGI
   tags: [cgi, cgi-bin, cgi-server, http, http-server, middleware, rfc3875]
@@ -159,8 +159,8 @@ Note: Whenever you start a server for validation, ensure you stop the process on
 
 - 404/route misses:
   - Check `urlPath` and script location under `filePath`.
-- Script not executable:
-  - Verify interpreter mapping in `extensions` or script shebang/permissions.
+- Script not executable (500 Error / EACCES / EFTYPE):
+  - Verify interpreter mapping in `extensions`, script shebang/permissions, or ensure binary format is supported on the target OS.
 - Large payload errors:
   - Increase `maxBuffer` and review chunk sizes.
 - Slow/hanging requests:
