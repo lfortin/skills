@@ -4,8 +4,8 @@ description: Install and configure the Node.js `cgi-core` package to host CGI sc
 license: MIT
 metadata:
   author: lfortin
-  version: "1.3.1"
-  updated: 2026-07-02
+  version: "1.3.2"
+  updated: 2026-08-16
   category: Web Server / CGI
   tags: [cgi, cgi-bin, cgi-server, http, http-server, middleware, rfc3875]
 ---
