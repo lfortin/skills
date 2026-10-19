@@ -4,8 +4,8 @@ description: Use this skill when the user asks to design, simulate, or document 
 license: MIT
 metadata:
   author: lfortin
-  version: "1.5.1"
-  updated: 2026-05-14
+  version: "1.6.0"
+  updated: 2026-10-18
   category: Worldbuilding
   tags: [astronomy, astrophysics, physics, orbital-mechanics, scifi, hard-sci-fi, simulation, worldbuilding, procedural-generation]
 ---
@@ -16,11 +16,13 @@ Design a stellar system that is internally consistent with basic orbital and the
 
 ## Workflow
 
-1. Define the central star and its primary constraints.
-2. Establish orbital architecture and stability rules.
-3. Map thermal zones and energy flows.
-4. Assign plausible planetary compositions by orbital region.
-5. Produce a final system sheet using the output template.
+1. Define the central star and its primary constraints (**Section 1**).
+2. Establish orbital architecture and stability rules (**Section 2**).
+3. Map thermal zones and energy flows (**Section 3**).
+4. Assign plausible planetary compositions by orbital region (**Section 4**).
+5. Map system observations using the Triple Observational Standard (**Section 5**).
+6. Produce the final system sheet using the output template.
+7. Propose context persistence / memory refresh options (**Section 6**).
 
 ## 1) Stellar Core Logic
 
@@ -66,6 +68,13 @@ For complete mapping, describe system observations from three vantage points:
 - **Median Watch:** temperate-zone traffic, intersections, and stable operations.
 - **Aphelion Watch:** deep-system anomalies and boundary dynamics.
 
+## 6) Context Persistence & State Snapshot
+
+To prevent loss of simulation state across long sessions:
+
+- **Save Snapshot Prompt:** After major system updates or at the end of full system generation, offer to write a condensed system JSON or Markdown file (e.g., `system_state_summary.json` or `system_state.md`) into a temporary working directory (e.g., `/tmp/` or `./temp/`) for future reference.
+- **Memory Refresh Prompt:** If the conversation becomes lengthy or context degradation is suspected, offer to present a consolidated summary of all current system parameters (stars, celestial bodies, physical constants, orbital mechanics) to re-anchor the model's memory in the current session.
+
 ## Output Template
 
 Use this template for each major body:
@@ -98,3 +107,4 @@ Before finalizing, verify:
 - Thermal zones match star output and orbital distances.
 - Composition matches formation region or clearly documented migration history.
 - The final write-up uses consistent units and terminology.
+- The user is offered options to save the current simulation state or reload/refresh memory if the interaction is multi-turn or complex.
