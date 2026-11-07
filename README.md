@@ -1,6 +1,9 @@
 # skills
 lfortin's own agent skills collection
 
+## Agent Protocols
+- `aicp`: Agent Inquiry and Communication Protocol for two-way agent sessions (presence probe, capability check, handshake, discussion) over a subagent/task tool, mailbox files, or human-as-relay.
+
 ## Web Development
 - `setup-cgi-core`: Install and configure Node.js `cgi-core` package to host CGI scripts via CLI or middleware for HTTP server.
 - `setup-os-monitor`: Install and configure Node.js `os-monitor` package with thresholds, event handlers and stream mode.
