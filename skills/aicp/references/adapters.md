@@ -35,7 +35,7 @@ aicp/<session_id>/to-initiator.jsonl
 
 Initiator **appends** to `to-responder.jsonl`. Responder **appends** to `to-initiator.jsonl`. Never rewrite earlier lines. Optional `aicp/<session_id>/session.json` may store `session_id`, adapter, and handshake snapshot after accept.
 
-**Concurrent writes:** Two agents can hit a brief OS lock if they write at the same time (especially to `session.json`, or if a side ever appends while another process touches the same file). Append atomically (one complete JSONL line per write, e.g. open-append-write-close, or write a temp file and rename into place for `session.json`). If a write fails with a lock or busy error, retry a few times with a short backoff (tens to a few hundred milliseconds) instead of treating it as `transport_lost` on the first failure.
+**Concurrent writes:** Two agents can hit a brief OS lock if they write at the same time (especially to `session.json`, or if a side ever appends while another process touches the same file). Append atomically (one complete JSONL line per write, e.g. open-append-write-close, or write a temp file and rename into place for `session.json`). If a write fails with a lock or busy error, retry a few times with a short backoff (tens to a few hundred milliseconds) instead of treating it as `transport_lost` on the first failure. That is adapter I/O retry, not envelope `retryable` (resend of an AICP frame).
 
 **Presence:** Append `probe` to `to-responder.jsonl`. Poll `to-initiator.jsonl` until a `probe_ack` with the same `session_id` appears. Default wait **60 seconds** unless the user sets another timeout. If the file never gains that line, presence failed.
 
