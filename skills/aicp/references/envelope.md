@@ -1,4 +1,4 @@
-# AICP envelope (version 1.1)
+# AICP envelope (version 1.2)
 
 Every full-AICP message is one JSON object. AICP-lite uses the same field names as Markdown headers instead of this envelope.
 
@@ -6,7 +6,7 @@ Every full-AICP message is one JSON object. AICP-lite uses the same field names 
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "probe",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 0,
@@ -18,20 +18,20 @@ Every full-AICP message is one JSON object. AICP-lite uses the same field names 
 }
 ```
 
-- `aicp`: wire dialect (semantic versioning, MAJOR.MINOR; no patch). This document is `"1.1"`. Always send `"1.1"`. Accept inbound any `1.x`. Major ≠ `1` → `error` `version_mismatch`. A 1.0 inbound `error` may omit `retryable`; treat that as `false`. Do not expect a 1.0 peer to honor `retryable`. Ignore unknown keys from a later `1.x`.
-- `msg_type`: `probe` | `probe_ack` | `handshake` | `handshake_ack` | `turn` | `close` | `error`
+- `aicp`: wire dialect (semantic versioning, MAJOR.MINOR; no patch). This document is `"1.2"`. Always send `"1.2"`. Accept inbound any `1.x`. Major ≠ `1` → `error` `version_mismatch`. A 1.0 inbound `error` may omit `retryable`; treat that as `false`. Do not expect a 1.0 peer to honor `retryable` or a peer older than `1.2` to understand `ping` / `pong`. Ignore unknown keys from a later `1.x`.
+- `msg_type`: `probe` | `probe_ack` | `handshake` | `handshake_ack` | `turn` | `close` | `error` | `ping` | `pong`
 - `session_id`: UUID shared for the whole session
-- `seq`: integer, starts at `0`, increments by 1 on every outbound message from that sender’s stream (treat the session as one combined sequence: each new message gets `last_seq + 1`)
+- `seq`: integer, starts at `0`, increments by 1 on every outbound sequenced message (treat the session as one combined sequence: each new sequenced message gets `last_seq + 1`). `ping` and `pong` set `seq` to `null` and do not change `last_seq`.
 - `ts`: ISO-8601 timestamp
 - `from` / `to`: `role` is `initiator` or `responder`; `agent_id` is optional
-- `in_reply_to`: seq of the message being answered, or omit/`null` on the first `probe`
+- `in_reply_to`: seq of the sequenced message being answered, or omit/`null` on the first `probe`. `ping` and `pong` use `null` (they have no seq to cite).
 - `payload`: object shaped by `msg_type`
 
 ## probe
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "probe",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 0,
@@ -46,11 +46,11 @@ Every full-AICP message is one JSON object. AICP-lite uses the same field names 
 
 ## probe_ack
 
-Always send `"aicp": "1.1"`. Advertise this skill with `version: "1.1"`.
+Always send `"aicp": "1.2"`. Advertise this skill with `version: "1.2"`.
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "probe_ack",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 1,
@@ -60,7 +60,7 @@ Always send `"aicp": "1.1"`. Advertise this skill with `version: "1.1"`.
   "in_reply_to": 0,
   "payload": {
     "skill_installed": true,
-    "version": "1.1",
+    "version": "1.2",
     "supported_msg_types": [
       "probe",
       "probe_ack",
@@ -68,7 +68,9 @@ Always send `"aicp": "1.1"`. Advertise this skill with `version: "1.1"`.
       "handshake_ack",
       "turn",
       "close",
-      "error"
+      "error",
+      "ping",
+      "pong"
     ],
     "supported_payload_formats": ["json", "markdown", "text"]
   }
@@ -81,7 +83,7 @@ If the remote is present but does not have AICP, still send this shape when poss
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "handshake",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 2,
@@ -114,7 +116,7 @@ If the remote is present but does not have AICP, still send this shape when poss
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "handshake_ack",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 3,
@@ -136,7 +138,7 @@ If the remote is present but does not have AICP, still send this shape when poss
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "turn",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 4,
@@ -157,7 +159,7 @@ For `payload_format: json`, use `body` as an object. For `text` or `markdown`, `
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "close",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 7,
@@ -174,6 +176,52 @@ For `payload_format: json`, use `body` as an object. For `text` or `markdown`, `
 
 `status` is `done` | `abandoned` | `failed`. Examples in this file are per `msg_type`; seq numbers are not one continuous session.
 
+## ping
+
+Heartbeat. Either side may send `ping` after `probe_ack`, including while a handshake or turn is still outstanding, to confirm the peer can still reply. It does not advance discussion.
+
+Send `ping` only when the peer advertises `1.2` or newer (`payload.version` minor ≥ `2`, or `supported_msg_types` includes both `ping` and `pong`). A `1.0` or `1.1` peer does not know this type.
+
+`seq` is `null`, so the frame stays outside the session sequence. `in_reply_to` is `null`. `payload.info` is an optional string saying why this ping was sent (for example, the remote is taking unexpectedly long to reply). Omit it, or send `"payload": {}`, when there is nothing to add. If `info` is present it is a string; ignore a non-string rather than failing the session.
+
+```json
+{
+  "aicp": "1.2",
+  "msg_type": "ping",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "seq": null,
+  "ts": "2026-11-11T16:00:00Z",
+  "from": { "role": "initiator" },
+  "to": { "role": "responder" },
+  "in_reply_to": null,
+  "payload": {
+    "info": "Turn is taking longer than expected; checking the session is still alive."
+  }
+}
+```
+
+## pong
+
+Reply to `ping`. Send it promptly on the same adapter. It confirms the sender is still in the session. It is not a `turn`, not an ack of the in-flight discussion frame, and it does not change `last_seq`.
+
+`seq` is `null`. `in_reply_to` is `null`. `payload.info` is an optional string (for example, still working on the current turn). A pong answers the latest ping; heartbeats are not ordered. A missing pong does not by itself end the session: keep waiting on the real reply, send another ping, or use the adapter timeout already in force.
+
+```json
+{
+  "aicp": "1.2",
+  "msg_type": "pong",
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "seq": null,
+  "ts": "2026-11-11T16:00:02Z",
+  "from": { "role": "responder" },
+  "to": { "role": "initiator" },
+  "in_reply_to": null,
+  "payload": {
+    "info": "Still here; the turn is still in progress."
+  }
+}
+```
+
 ## error
 
 Every `error` payload requires `code`, `detail`, and `retryable`. Omit `retryable` only if you mean `false`.
@@ -182,7 +230,7 @@ Every `error` payload requires `code`, `detail`, and `retryable`. Omit `retryabl
 
 - `malformed`: envelope is not valid JSON or required envelope fields are missing.
 - `payload_corrupted`: envelope parsed, but `payload` / `body` is unreadable or fails the negotiated schema.
-- `out_of_order`: sequence drift (`seq` not `last_seq + 1`, or `in_reply_to` does not name a known frame).
+- `out_of_order`: sequence drift on a sequenced message (`seq` not `last_seq + 1`, or `in_reply_to` does not name a known sequenced frame). `ping` and `pong` (`seq: null`) are not drift, and they are not a `target_seq`.
 - `format_mismatch`: `turn` `format` / `body` type does not match negotiated `payload_format`.
 - Adapter I/O retries (mailbox lock, spawn retry) are not this frame. `retryable` means “resend an AICP message,” not “retry the write.”
 
@@ -198,7 +246,7 @@ Non-retryable example (bad turn at seq 4):
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "error",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 5,
@@ -220,7 +268,7 @@ Turn seq 4 is unreadable → error seq 5 asks to resend that turn → peer resen
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "error",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 5,
@@ -243,7 +291,7 @@ Retransmitted turn:
 
 ```json
 {
-  "aicp": "1.1",
+  "aicp": "1.2",
   "msg_type": "turn",
   "session_id": "550e8400-e29b-41d4-a716-446655440000",
   "seq": 6,

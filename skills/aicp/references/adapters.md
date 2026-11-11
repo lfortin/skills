@@ -12,7 +12,7 @@ If the other agent lives in a **separate** chat or product and the user must cop
 
 **Presence:** Spawn or resume the nested agent with the `probe` envelope and an instruction to reply with only a `probe_ack` envelope first. That tool’s return **is** the remote’s send path. If the return has no `probe_ack`, presence failed.
 
-**Later turns:** Resume the **same** nested agent (same thread/id if the host provides one) with the next envelope (`handshake`, `turn`, `close`, `error`). Require the return to contain the next envelope.
+**Later turns:** Resume the **same** nested agent (same thread/id if the host provides one) with the next envelope (`handshake`, `turn`, `close`, `error`). Require the return to contain the next envelope. A `ping` checks liveness and is not the next discussion envelope. If this tool cannot accept a second message until the current task returns, wait for that return instead of pinging.
 
 **Instruction to include with the first spawn:**
 
@@ -39,7 +39,7 @@ Initiator **appends** to `to-responder.jsonl`. Responder **appends** to `to-init
 
 **Presence:** Append `probe` to `to-responder.jsonl`. Poll `to-initiator.jsonl` until a `probe_ack` with the same `session_id` appears. Default wait **60 seconds** unless the user sets another timeout. If the file never gains that line, presence failed.
 
-**Polling:** Read only new lines after the last seq you have seen. Ignore envelopes with a different `session_id`.
+**Polling:** Read new lines after the last sequenced seq you have seen, and also new lines with `seq: null` (`ping`, `pong`). A null seq does not move the seq cursor. Ignore envelopes with a different `session_id`.
 
 **Create the directory** if missing: `aicp/<session_id>/`.
 
